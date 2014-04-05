@@ -12,16 +12,16 @@
 
     <h1>Do buy list</h1>
 
-    <ul id="list" class="list-group"></ul>
-
     <p>
         <input id="new-item" type="text">
        <!-- <input id="addbutton" type="button" value="add to list"> -->
-        <button id="addbutton" type="button" class="btn btn-success btn-sm">
+        <button id="addbutton" type="button" class="btn btn-primary btn-sm">
             <span class="glyphicon glyphicon-shopping-cart"></span>
             add to list
         </button>
     </p>
+
+    <ul id="list" class="list-group"></ul>
 
     <script src="js/jquery.js"></script>
     <script type="text/javascript" src="js/remotestorage.min.js"></script>
@@ -42,11 +42,19 @@
             for (var id in tasks) {
                 var task = tasks[id];
                 displayItem(task.title);
+
             }
         });
 
         function displayItem(title) {
-            $("#list").append('<li class="list-group-item"><div class="checkbox">' + title + '<label><input type="checkbox"></label></div></li>');
+            $("#list").append('<li class="list-group-item">' +
+                                  '<div class="checkbox">' +
+                                        '<label>' +
+                                                title +
+                                                '<input type="checkbox">' +
+                                        '</label>' +
+                                  '</div>' +
+                               '</li>');
         }
 
 
