@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>shopping list</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+<h1>Shopping list</h1>
+
+<ul id="list"></ul>
+
+<p>
+   we need<input id="new-item" type="text">
+   <input id="addbutton" type="button" value="add to list">
+</p>
+
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/remoteStorage.min.js"></script>
+<script src="js/storage.js"></script>
+<script>
+    $("#addbutton").click(function(){
+        var text = $("#new-item").val();
+        if (text) {
+            $("#list").append('<li><input type="checkbox">' + text + '</li>');
+            remoteStorage.tasks.addTask(text);
+        }
+        $("#new-item").val("");
+    })
+    remoteStorage.access.claim('tasks', 'rw');
+    remoteStorage.caching.enable("/tasks/");
+    remoteStorage.displayWidget();
+    remoteStorage.tasks.listTasks().then(function(tasks){
+        for (var id in tasks) {
+            var task = tasks[id];
+            $("#list").append('<li><input type="checkbox">' + task.title + '</li>');
+        };
+    });
+
+
+</script>
+
+</body>
+</html>
