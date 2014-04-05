@@ -2,44 +2,56 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>shopping list</title>
     <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 
 <body>
-<h1>Shopping list</h1>
+<div class="container">
 
-<ul id="list"></ul>
+    <h1>Shopping list</h1>
 
-<p>
-   we need<input id="new-item" type="text">
-   <input id="addbutton" type="button" value="add to list">
-</p>
+    <ul id="list" class="list-group"></ul>
 
-<script src="js/jquery.js"></script>
-<script type="text/javascript" src="js/remotestorage.min.js"></script>
-<script src="js/storage.js"></script>
-<script>
-    $("#addbutton").click(function(){
-        var text = $("#new-item").val();
-        if (text) {
-            $("#list").append('<li><input type="checkbox">' + text + '</li>');
-            remoteStorage.tasks.addTask(text);
+    <p>
+        <input id="new-item" type="text">
+       <!-- <input id="addbutton" type="button" value="add to list"> -->
+        <button id="addbutton" type="button" class="btn btn-success btn-sm">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            add to list
+        </button>
+    </p>
+
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/remotestorage.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script>
+        $("#addbutton").click(function () {
+            var text = $("#new-item").val();
+            if (text) {
+                displayItem(text);
+                remoteStorage.tasks.addTask(text);
+            }
+            $("#new-item").val("");
+        })
+        remoteStorage.access.claim('tasks', 'rw');
+        remoteStorage.caching.enable("/tasks/");
+        remoteStorage.displayWidget();
+        remoteStorage.tasks.listTasks().then(function (tasks) {
+            for (var id in tasks) {
+                var task = tasks[id];
+                displayItem(task.title);
+            }
+        });
+
+        function displayItem(title) {
+            $("#list").append('<li class="list-group-item"><div class="checkbox">' + title + '<label><input type="checkbox"></label></div></li>');
         }
-        $("#new-item").val("");
-    })
-    remoteStorage.access.claim('tasks', 'rw');
-    remoteStorage.caching.enable("/tasks/");
-    remoteStorage.displayWidget();
-    remoteStorage.tasks.listTasks().then(function(tasks){
-        for (var id in tasks) {
-            var task = tasks[id];
-            $("#list").append('<li><input type="checkbox">' + task.title + '</li>');
-        };
-    });
 
 
-</script>
+    </script>
 
+</div>
 </body>
 </html>
