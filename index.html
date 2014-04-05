@@ -26,39 +26,8 @@
     <script src="js/jquery.js"></script>
     <script type="text/javascript" src="js/remotestorage.min.js"></script>
     <script src="js/storage.js"></script>
-    <script>
-        $("#addbutton").click(function () {
-            var text = $("#new-item").val();
-            if (text) {
-                displayItem(text);
-                remoteStorage.tasks.addTask(text);
-            }
-            $("#new-item").val("");
-        })
-        remoteStorage.access.claim('tasks', 'rw');
-        remoteStorage.caching.enable("/tasks/");
-        remoteStorage.displayWidget();
-        remoteStorage.tasks.listTasks().then(function (tasks) {
-            for (var id in tasks) {
-                var task = tasks[id];
-                displayItem(task.title);
+    <script src="js/app.js"></script>
 
-            }
-        });
-
-        function displayItem(title) {
-            $("#list").append('<li class="list-group-item">' +
-                                  '<div class="checkbox">' +
-                                        '<label>' +
-                                                title +
-                                                '<input type="checkbox">' +
-                                        '</label>' +
-                                  '</div>' +
-                               '</li>');
-        }
-
-
-    </script>
 
 </div>
 </body>

@@ -27,12 +27,20 @@ RemoteStorage.defineModule('tasks', function(privateClient, publicClient) {
             // Add functions for retrieving and manipulating data using
             // methods provided by BaseClient
             addTask: function (title) {
+                var d = $.Deferred();
                 var id = new Date().getTime().toString();
-                return privateClient.storeObject('task', id, {
+                var task = {
                     id: id,
                     title: title,
                     completed: false
+                };
+                privateClient.storeObject('task', id, task).then(function() {
+                    d.resolve(task);
                 });
+                return d.promise();
+            },
+            removeTask: function(id) {
+                privateClient.remove(id + '');
             },
             // define more functions...
 
