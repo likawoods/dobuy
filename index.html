@@ -13,21 +13,30 @@
     <h3> Do buy list </h3>
 
     <p>
-        <input id="new-item" type="text">
-       <!-- <input id="addbutton" type="button" value="add to list"> -->
-        <button id="addbutton" type="button" class="btn btn-primary btn-sm">
+    <div class="row">
+        <div class="col-sm-10">
+            <p>
+         <input class="form-control" id="new-item" type="text">
+            </p>
+        </div>
+        <div class ="col-sm-2">
+        <!-- <input id="addbutton" type="button" value="add to list"> -->
+            <p>
+        <button id="addbutton" type="button" class="btn btn-primary btn-sm form-control">
             <span class="glyphicon glyphicon-shopping-cart"></span>
             add to list
         </button>
+            </p>
+        </div>
+    </div>
     </p>
 
-    <ul id="list" class="list-group"> </ul>
+    <ul id="list" class="list-group"></ul>
 
     <script src="js/jquery.js"></script>
     <script type="text/javascript" src="js/remotestorage.min.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
-
 
 
 </div>
