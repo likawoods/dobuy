@@ -34,19 +34,34 @@ RemoteStorage.defineModule('tasks', function(privateClient, publicClient) {
                     title: title,
                     completed: false
                 };
-                privateClient.storeObject('task', id, task).then(function() {
+                privateClient.storeObject('task', id, task).then(function () {
                     d.resolve(task);
                 });
                 return d.promise();
             },
-            removeTask: function(id) {
+            removeTask: function (id) {
                 privateClient.remove(id + '');
             },
             // define more functions...
 
-            listTasks: function() {
+            listTasks: function () {
                 return privateClient.getAll("");
+            },
+
+            onAddTask: function (callback) {
+                privateClient.on('change', function (e) {
+                    if (e.oldValue === undefined) {
+                        callback(e.newValue);
+                    }
+                });
+            },
+            onRemoveTask: function (callback) {
+                privateClient.on('change', function (e) {
+                    if (e.newValue === undefined) {
+                        callback(e.oldValue);
+                    }
+                });
             }
         }
-    };
+    }
 });
